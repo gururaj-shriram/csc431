@@ -1,7 +1,7 @@
 %
 % latex template for SRS documentation 
 % name: srs.tex 
-% date last modified: 22 feb 2018
+% date last modified: 24 feb 2018
 % modified by: jerry 
 % 
 %
@@ -18,19 +18,19 @@
 \begin{document}
 
 \title{
-    CSC431 \\
-    \vspace{0.2in}
-    \textbf{Download of Public-facing Data} \\
-    \large Software Requirements Specification \\
-    Team \#3 
+	CSC431 \\
+	\vspace{0.2in}
+	\textbf{Download of Public-facing Data} \\
+	\large Software Requirements Specification \\
+	Team \#3
 }
 
 \author{
-    Jerry Bonnell
-    \and Gururaj Shriram 
-    \and Erica Chang
-    \and Heyu Yao
-    \and Lixiong Liang
+	Jerry Bonnell
+	\and Gururaj Shriram
+	\and Erica Chang
+	\and Heyu Yao
+	\and Lixiong Liang
 }
 
 \date{}
@@ -40,23 +40,23 @@
 \section*{Version History}
 
 \begin{tabularx}{\textwidth}{| l | l | X | X |}
-    \hline
-    \textbf{Version} & \textbf{Date} & \textbf{Author(s)} & \textbf{Change Comments} \\
-    \hline
-         1   & \today   &    xxx       &      xxx   \\
-    \hline 
-            &      &           &                 \\
-    \hline
-            &      &           &                 \\
-    \hline             
+	\hline
+	\textbf{Version} & \textbf{Date} & \textbf{Author(s)} & \textbf{Change Comments} \\
+	\hline
+	1                & \today        & xxx                & xxx                      \\
+	\hline
+	                 &               &                    &                          \\
+	\hline
+	                 &               &                    &                          \\
+	\hline
 \end{tabularx}
 
 \clearpage
-	\tableofcontents
+\tableofcontents
 
 \clearpage
-	\listoffigures
-	\listoftables
+\listoffigures
+\listoftables
 
 \clearpage
 
@@ -64,37 +64,42 @@
 
 \subsection{Functional Requirements}
 
-\subsubsection{Requirement Title}
+\subsubsection{Download of Public-facing Data}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Source Scenario} &  Code for associated scenario in SCD \\ \hline
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline 
-    \textbf{Precondition(s)} &  What needs to happen before \\ \hline
-    \textbf{Postcondition(s)} &  What happens as a result \\ \hline
-    \textbf{Use Case Diagram} &  Link or number, if present \\  \hline                 
-\end{tabularx}
+	\caption{Download of Public-facing Data}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}            & Download of Public-facing Data            \\ \hline
+		\textbf{Description}      & User can choose an output format for
+		queried data and download locally to computer. \\ \hline
+		\textbf{Source Scenario}  & FR1                                       \\ \hline
+		\textbf{Priority}         & Mandatory: 0                              \\ \hline
+		\textbf{Precondition(s)}  & List of layers consisting of cadastral,
+		multimedia, and workshop data is passed to the server. Output format
+		is given: one of \texttt{GeoJSON}, esri \texttt{shapefile}, \texttt{kml},
+		or \texttt{CSV} \\ \hline
+		\textbf{Postcondition(s)} & Data is packaged into a zip file and sent
+		back to the browser for local download. \\ \hline
+		\textbf{Use Case Diagram} &                                           \\  \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Non-Functional Requirements}
 
-
-\subsubsection{Requirement Title}
+\subsubsection{Minimum Simultaneous Downloads}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Source Scenario} &  Code for associated scenario in SCD \\ \hline
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline 
-    \textbf{Applicable FR(s)} &  What functional requirement(s) is this applicable to? \\ \hline            
-\end{tabularx}
+	\caption{Minimum Simultaneous Downloads}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}            & Minimum Simultaneous Downloads          \\ \hline
+		\textbf{Description}      & The download server must handle up to 3
+		simultaneous download requests. \\ \hline
+		\textbf{Source Scenario}  & NFR1                                    \\ \hline
+		\textbf{Priority}         & High: 1                                 \\ \hline
+		\textbf{Applicable FR(s)} & FR1                                     \\ \hline
+	\end{tabularx}
 \end{table}
 
 \pagebreak
@@ -103,86 +108,158 @@
 
 \subsection{Tool Constraints}
 
-\subsubsection{Requirement Title}
+\subsubsection{Web Application Framework Constraint}
+
+\textbf{References:}
+\begin{itemize}
+	\item \url{https://nodejs.org}
+	\item \url{https://expressjs.com/}
+\end{itemize}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Web Application Framework Constraint}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Web Application Framework Constraint              \\ \hline
+		\textbf{Description} & We will be using Express/Node.js as the framework
+		for the backend. This will allow for greater ease of deployment on the
+		server-side. \\ \hline
+		\textbf{Priority}    & Mandatory: 0                                      \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & INSERT CONVERSION PACKAGE              \\ \hline
+		\textbf{Description} & A one or two sentence description      \\ \hline
+		\textbf{Priority}    & Priority from 0 (highest) - 5 (lowest) \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & INSERT PACKAGING TOOL                  \\ \hline
+		\textbf{Description} & A one or two sentence description      \\ \hline
+		\textbf{Priority}    & Priority from 0 (highest) - 5 (lowest) \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Language Constraints}
 
-\subsubsection{Requirement Title}
+\subsubsection{Backend REST Framework}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Backend REST Framework}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Backend REST Framework                      \\ \hline
+		\textbf{Description} & Because we are using the Express framework,
+		Javascript is a requirement. Therefore, the backend will be written
+		in Javascript. \\ \hline
+		\textbf{Priority}    & Mandatory: 0                                \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Platform Constraints}
 
-\subsubsection{Requirement Title}
+\subsubsection{Web Service Platform}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Web Service Platform}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Web Service Platform                      \\ \hline
+		\textbf{Description} & Express/Node.js is, fortunately, platform
+		independent. Further, a platform constraint has not been set by the
+		client for this team.       \\ \hline
+		\textbf{Priority}    & Lowest: 5                                 \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Hardware Constraints}
 
-\subsubsection{Requirement Title}
+As we are using Amazon EC2 for deployment, our hardware constraints are set by the free-tier package Amazon provides. \\
+
+\textbf{References:}
+\begin{itemize}
+	\item \url{https://aws.amazon.com/ec2/}
+\end{itemize}
+
+\subsubsection{Storage Constraints}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Storage Constraints}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Storage Constraints                          \\ \hline
+		\textbf{Description} & Our storage constraint is set by Amazon EC2.
+		However, storage constraints are of minimal priority for this team
+		as there will be nothing stored on disk.        \\ \hline
+		\textbf{Priority}    & Lowest: 5                                    \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsubsection{Computation Constraints}
+
+\begin{table}[H]
+	\caption{Computation Constraints}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Computation Constraints                          \\ \hline
+		\textbf{Description} & Our computation constraint is also set by Amazon
+		EC2. Its free-tier service is ample for this team as our service
+		primarily converts and packages data.          \\ \hline
+		\textbf{Priority}    & Low: 4                                           \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Network Constraints}
 
-\subsubsection{Requirement Title}
+\subsubsection{Access Database}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Access Database}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Access Database                              \\ \hline
+		\textbf{Description} & Our service must be able to query a PostGRES
+		database over the network in order to fetch geospatial and multimedia
+		data.     \\ \hline
+		\textbf{Priority}    & Mandatory: 0                                 \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsubsection{Download Response}
+
+\begin{table}[H]
+	\caption{Download Response}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Download Response                                 \\ \hline
+		\textbf{Description} & Our service must be able to package and send back
+		data to the browser over HTTP protocol for local download. \\ \hline
+		\textbf{Priority}    & Mandatory: 0                                      \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Deployment Constraints}
 
-\subsubsection{Requirement Title}
+\subsubsection{AWS EC2 Deployment}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{AWS EC2 Deployment}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & AWS EC2 Deployment                              \\ \hline
+		\textbf{Description} & The web service will be deployed on Amazon EC2.
+		Amazon provides a free-tier service for 12 months that will last the
+		duration of the semester.        \\ \hline
+		\textbf{Priority}    & Medium: 3                                       \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Transition \& Support Constraints}
@@ -190,13 +267,13 @@
 \subsubsection{Requirement Title}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Insert title                           \\ \hline
+		\textbf{Description} & A one or two sentence description      \\ \hline
+		\textbf{Priority}    & Priority from 0 (highest) - 5 (lowest) \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Budget \& Schedule Constraints}
@@ -204,13 +281,13 @@
 \subsubsection{Requirement Title}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Insert title                           \\ \hline
+		\textbf{Description} & A one or two sentence description      \\ \hline
+		\textbf{Priority}    & Priority from 0 (highest) - 5 (lowest) \\ \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Miscellaneous Constraints}
@@ -218,13 +295,13 @@
 \subsubsection{Requirement Title}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline       
-\end{tabularx}
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Insert title                           \\ \hline
+		\textbf{Description} & A one or two sentence description      \\ \hline
+		\textbf{Priority}    & Priority from 0 (highest) - 5 (lowest) \\ \hline
+	\end{tabularx}
 \end{table}
 
 \clearpage
@@ -234,10 +311,10 @@
 \subsection{Requirement Title}
 
 \begin{figure}[H]
-  \begin{center}
-    \caption{Sample Use Case}
-    \includegraphics{images/sample_use_case.png}
-  \end{center}
+	\begin{center}
+		\caption{Sample Use Case}
+		\includegraphics{images/sample_use_case.png}
+	\end{center}
 \end{figure}
 
 \clearpage
@@ -249,16 +326,16 @@
 \subsubsection{Requirement Title}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline 
-    \textbf{Precondition(s)} &  What needs to happen before \\ \hline
-    \textbf{Postcondition(s)} &  What happens as a result \\ \hline
-    \textbf{Use Case Diagram} &  Link or number, if present \\  \hline                 
-\end{tabularx}
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}            & Insert title                           \\ \hline
+		\textbf{Description}      & A one or two sentence description      \\ \hline
+		\textbf{Priority}         & Priority from 0 (highest) - 5 (lowest) \\ \hline
+		\textbf{Precondition(s)}  & What needs to happen before            \\ \hline
+		\textbf{Postcondition(s)} & What happens as a result               \\ \hline
+		\textbf{Use Case Diagram} & Link or number, if present             \\  \hline
+	\end{tabularx}
 \end{table}
 
 \subsection{Functional Requirements}
@@ -266,14 +343,14 @@
 \subsubsection{Requirement Title}
 
 \begin{table}[H]
-\caption{Table title}
-\begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Title} & Insert title \\ \hline
-    \textbf{Description} &  A one or two sentence description \\ \hline 
-    \textbf{Priority} &  Priority from 0 (highest) - 5 (lowest) \\ \hline 
-    \textbf{Applicable FR(s)} &  What functional requirement(s) is this applicable to? \\ \hline            
-\end{tabularx}
+	\caption{Table title}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}            & Insert title                                          \\ \hline
+		\textbf{Description}      & A one or two sentence description                     \\ \hline
+		\textbf{Priority}         & Priority from 0 (highest) - 5 (lowest)                \\ \hline
+		\textbf{Applicable FR(s)} & What functional requirement(s) is this applicable to? \\ \hline
+	\end{tabularx}
 \end{table}
 
 
