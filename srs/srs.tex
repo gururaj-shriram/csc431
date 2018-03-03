@@ -1,8 +1,8 @@
 %
 % latex template for SRS documentation 
 % name: srs.tex 
-% date last modified: 25 feb 2018
-% modified by: guru 
+% date last modified: 3 mar 2018
+% modified by: jerry 
 % 
 %
 \documentclass{article}
@@ -18,6 +18,8 @@
 \begin{document}
 
 \title{
+	\includegraphics{images/um_logo.png} \\
+	\vspace{0.1in}
 	CSC431 \\
 	\vspace{0.2in}
 	\textbf{Download of Public-facing Data} \\
@@ -39,15 +41,11 @@
 \clearpage
 \section*{Version History}
 
-\begin{tabularx}{\textwidth}{| l | l | X | X |}
+\begin{tabularx}{\textwidth}{| l | l | X | l |}
 	\hline
 	\textbf{Version} & \textbf{Date} & \textbf{Author(s)} & \textbf{Change Comments} \\
 	\hline
-	1                & \today        & xxx                & xxx                      \\
-	\hline
-	                 &               &                    &                          \\
-	\hline
-	                 &               &                    &                          \\
+	1 & \today & Jerry Bonnell, Gururaj Shriram, Re Chang & First Draft \\
 	\hline
 \end{tabularx}
 
@@ -81,7 +79,7 @@
 		or \texttt{CSV} \\ \hline
 		\textbf{Postcondition(s)} & Data is packaged into a zip file and sent
 		back to the browser for local download. \\ \hline
-		\textbf{Use Case Diagram} &                                           \\  \hline
+		\textbf{Use Case Diagram} & Figure \ref{FR1-use-case}                 \\  \hline
 	\end{tabularx}
 \end{table}
 
@@ -276,6 +274,18 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 	\end{tabularx}
 \end{table}
 
+\subsubsection{Continued Maintenance}
+
+\begin{table}[H]
+	\caption{End of Life}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & End of Life            \\ \hline
+		\textbf{Description} & This service is a term project for the course CSC431. As such, this service will no longer be maintained after the final grading period, and a new team is required to ensure continued development. \\ \hline
+		\textbf{Priority}    & Lowest: 5 \\ \hline
+	\end{tabularx}
+\end{table}
+
 \subsection{Budget \& Schedule Constraints}
 
 \subsubsection{Time Constraints}
@@ -285,8 +295,23 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\textbf{Title}       & Time Constraints                           \\ \hline
-		\textbf{Description} & The service must be designed and developed before May 7, 2018      \\ \hline
+		\textbf{Description} & The service must be designed and developed before the end
+			 of the semester: May 7, 2018. A working prototype must be released before
+			this date.      \\ \hline
 		\textbf{Priority}    & Mandatory: 0 \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsubsection{Budget Constraints}
+
+\begin{table}[H]
+	\caption{Budget Constraints}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Title}       & Budget Constraints                           \\ \hline
+		\textbf{Description} & No funds have been made available by the client. 
+			Therefore, this project has no budget. \\ \hline
+		\textbf{Priority}    & Lowest: 5 \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -310,23 +335,87 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 
 \subsection{Download Public-Facing Data}
 
+\begin{table}[H]
+	\caption{FR1 Scenario}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Statement of Purpose} & The user is interested in downloading useful
+			information in order to quicken the process of obtaining land grants.         \\ \hline
+		\textbf{Individual}      & A public (unauthorized), registered (authorized), or 
+			administrator user. \\ \hline
+		\textbf{Trigger}  & The user presses a download button.               \\ \hline
+		\textbf{Precondition(s)}  & A user search has been completed, filtered for 
+			workshop, multimedia, and cadastral data, and may have been subsetted. 
+			\\ \hline
+		\textbf{Postcondition(s)}  & A compressed file is downloaded to the user's local 
+			machine.  \\ \hline
+		\textbf{Assumptions} & N/A \\ \hline
+		\textbf{Steps of Scenario} & 
+		\begin{enumerate}
+				\item User A observes a list of results from a completed search.
+				\item User A selects a checkbox for result \#3.
+				\item User A presses the download button.
+				\item A compressed file of data relevant to result \#3 is downloaded locally to User A's machine. 
+			\end{enumerate}           \\  \hline
+	\end{tabularx}
+\end{table}
+
 \begin{figure}[H]
 	\begin{center}
 		\caption{Download Public-Facing Data}
+		\label{FR1-use-case}
 		\includegraphics[width=\textwidth]{images/download-use-case.pdf}
+	\end{center}
+\end{figure}
+
+\subsection{Minimum Simultaneous Downloads}
+
+\begin{table}[H]
+	\caption{NFR1 Scenario}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Statement of Purpose} & title         \\ \hline
+		\textbf{Individual}      & individuals \\ \hline
+		\textbf{Trigger}  & trigger            \\ \hline
+		\textbf{Precondition(s)}  & precondition \\ \hline
+		\textbf{Postcondition(s)}  & postcondition \\ \hline
+		\textbf{Assumptions} & One download request is made for each 
+			checkbox selected. \\ \hline
+		\textbf{Steps of Scenario} & 
+		\begin{enumerate}
+				\item step 1 
+				\item step 2 
+				\item step 3 
+				\item step 4 
+			\end{enumerate}  \\  \hline
+	\end{tabularx}
+\end{table}
+
+\clearpage
+
+\subsection{Class Diagram}
+
+\begin{figure}[H]
+	\begin{center}
+		\caption{Class Diagram}
+		\label{class-diagram}
+		\includegraphics[width=\textwidth]{images/class_diagram.pdf}
 	\end{center}
 \end{figure}
 
 \clearpage
 
-\section{Evolutionary Requirements (TBA in further iterations of the SRS)}
+\section{Evolutionary Requirements (TBA)}
+
+At this moment, there are no evolutionary requirements set for this project.
 
 \subsection{Functional Requirements}
 
-\subsubsection{Requirement Title}
+
+\subsubsection{Placeholder}
 
 \begin{table}[H]
-	\caption{Table title}
+	\caption{Placeholder}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\textbf{Title}            & Insert title                           \\ \hline
@@ -340,10 +429,10 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 
 \subsection{Functional Requirements}
 
-\subsubsection{Requirement Title}
+\subsubsection{Placeholder}
 
 \begin{table}[H]
-	\caption{Table title}
+	\caption{Placeholder}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\textbf{Title}            & Insert title                                          \\ \hline
