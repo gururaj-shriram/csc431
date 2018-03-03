@@ -2,7 +2,7 @@
 % latex template for SRS documentation 
 % name: srs.tex 
 % date last modified: 3 mar 2018
-% modified by: jerry 
+% modified by: guru 
 % 
 %
 \documentclass{article}
@@ -69,8 +69,8 @@
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\textbf{Title}            & Download of Public-facing Data            \\ \hline
-		\textbf{Description}      & User can choose an output format for
-		queried data and download locally to computer. \\ \hline
+		\textbf{Description}      & Users can choose an output format for
+		queried data and download it locally to their machine. \\ \hline
 		\textbf{Source Scenario}  & FR1                                       \\ \hline
 		\textbf{Priority}         & Mandatory: 0                              \\ \hline
 		\textbf{Precondition(s)}  & List of layers consisting of cadastral,
@@ -78,7 +78,7 @@
 		is given: one of \texttt{GeoJSON}, esri \texttt{shapefile}, \texttt{kml},
 		or \texttt{CSV} \\ \hline
 		\textbf{Postcondition(s)} & Data is packaged into a zip file and sent
-		back to the browser for local download. \\ \hline
+		back to the browser for a local download. \\ \hline
 		\textbf{Use Case Diagram} & Figure \ref{FR1-use-case}                 \\  \hline
 	\end{tabularx}
 \end{table}
@@ -374,19 +374,20 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 	\caption{NFR1 Scenario}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
-		\textbf{Statement of Purpose} & title         \\ \hline
-		\textbf{Individual}      & individuals \\ \hline
-		\textbf{Trigger}  & trigger            \\ \hline
-		\textbf{Precondition(s)}  & precondition \\ \hline
-		\textbf{Postcondition(s)}  & postcondition \\ \hline
+		\textbf{Statement of Purpose} & The user would like to be able to download multiple pieces of information together instead of individually.         \\ \hline
+		\textbf{Individual} & A public (unauthorized), registered (authorized), or administrator user. \\ \hline
+		\textbf{Trigger}  & The user selects multiple pieces of information and presses the download button.            \\ \hline
+		\textbf{Precondition(s)}  & A user search has been completed, filtered for 
+			workshop, multimedia, and cadastral data, and may have been subsetted. The user has selected multiple pieces of information to download. \\ \hline
+		\textbf{Postcondition(s)}  & The multiple pieces of information selected for downloading are compressed and downloaded to the user's local machine. \\ \hline
 		\textbf{Assumptions} & One download request is made for each 
-			checkbox selected. \\ \hline
+			checkbox selected. Initially, up to 3 checkboxes may be selected at one time. If possible, in a future iteration of the system, more than 3 checkboxes may be selected at one time. \\ \hline
 		\textbf{Steps of Scenario} & 
 		\begin{enumerate}
-				\item step 1 
-				\item step 2 
-				\item step 3 
-				\item step 4 
+				\item User A observes a list of results from a completed search.
+				\item User A selects multiple checkboxes to download.
+				\item User A presses the download button.
+				\item The multiple pieces of information relevant to the selected checkboxes are compressed and downloaded locally to User A's machine.
 			\end{enumerate}  \\  \hline
 	\end{tabularx}
 \end{table}
