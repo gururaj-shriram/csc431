@@ -360,6 +360,30 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 	\end{tabularx}
 \end{table}
 
+\begin{table}[H]
+	\caption{Primary Use Case}
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\textbf{Name} & Download of Public-Facing Data Use Case \\ \hline
+		\textbf{Description}      & This is the primary use case for the flow of the download system.  \\ \hline
+		\textbf{Actors}  & The Administrator, Authorized User, and Unauthorized User.  \\ \hline
+		\textbf{Trigger}  & This use case is initiated when a user clicks the download button. \\ \hline
+		\textbf{Precondition(s)}  & The user has received Search results, chosen the files to download, and clicked the download button.  \\ \hline
+		\textbf{Basic Flow} &  
+		\begin{enumerate}
+				\item The user, regardless of their authentication level, selects files to download from the Search results.
+				\item The user clicks the download button.
+				\item For an unauthorized user, the system begins the download process only if the requested data is public. The download of private data requires either an appropriate authentication level or permission from the administrator.
+				\item For an authorized user: the system begins the download process for the requested data.
+				\item If the user has permissions to download the requested data, the system fetches the data from the database and packages it.
+				\item A compressed file of data relevant to the requested data is downloaded locally to the user's machine. 
+			\end{enumerate}           \\  \hline
+		\textbf{Exceptions} & If the user does not have the proper authentication level to download private data, they must request access from an administrator. If there are any errors in the flow, the user may be requested to retry the download. \\  \hline
+		\textbf{Postcondition(s)} & The user has received a compressed file of their requested data, and any database connections created to download the data are closed.  \\  \hline
+		\textbf{Special Requirements} & Download of data requires either an appropriate authentication level or permission from an administrator. Further, in the initial implementation, only 3 simultaneous download requests are permitted. This use case also assumes that the Search results are accurate and the requested data is stored in the database.  \\  \hline
+	\end{tabularx}
+\end{table}
+
 \begin{figure}[H]
 	\begin{center}
 		\caption{Download Public-Facing Data}
