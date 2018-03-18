@@ -2,7 +2,7 @@
 % latex template for SAS documentation 
 % name: sas.tex 
 % date last modified: 18 mar 2018
-% modified by: jerry
+% modified by: guru
 % 
 %
 \documentclass{article}
@@ -91,13 +91,13 @@
 	
 	\subsubsection{Design Pattern(s)}
 	
-	Express is a flexible Node.js framework that provides a robust set of features. We predict that the following design patterns will be primarily used: \\
+	Express is a flexible Node.js framework that provides a robust set of features. We predict that the following design patterns will be primarily used in the following ways: \\
 	
 	\begin{itemize} 
-		\item Factory
-		\item Singleton
-		\item Middleware
-		\item Stream
+		\item Factory: To abstract objects that may share common tasks, such as data management and parsing objects
+		\item Singleton: To maintain a single, consistent reference, such as a database reference
+		\item Middleware: To handle flows that have middleware functions in the system's request-response cycle, such as in the data conversion process
+		\item Stream: To process large amounts of flowing data, such as in the file writing/core download process
 	\end{itemize}
 	
 	
@@ -133,12 +133,11 @@
 	\section{Functional Design}
 	
 	% use case should not be included here. 
-	Here, insert the sequence diagram 
 
 	\begin{figure}[H]
 		\begin{center}
 			\caption{Download Sequence Diagram}
-			\includegraphics[width=\textwidth]{images/sample-sequence-diagram.png}
+			\includegraphics[width=\textwidth]{images/download_sequence_diagram.jpg}
 		\end{center}
 	\end{figure}
 
