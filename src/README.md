@@ -32,4 +32,4 @@ And you can view the contents in `localhost` by visiting a browser and going to 
 http://localhost:PORT
 ```
 
-To edit the server, edit `index.js`.
+To edit the server, edit `app.js`.
