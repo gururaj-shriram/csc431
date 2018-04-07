@@ -2,10 +2,9 @@
   "name": "download",
   "version": "1.0.0",
   "description": "Download System for the CSC 431 Software Engineering Course",
-  "main": "index.js",
+  "main": "app/app.js",
   "scripts": {
-    "start": "node index.js",
-    "nodemon": "nodemon index.js",
+    "start": "nodemon --watch app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +19,7 @@
   "homepage": "https://github.com/jerrybonnell/csc431#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "reload": "^2.2.2"
   }
 }

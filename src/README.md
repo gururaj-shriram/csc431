@@ -26,12 +26,6 @@ Then you can run the server with this:
 $ npm start
 ```
 
-Or if you want to use nodemon which automatically restarts the server when you make a change, run:
-
-```shell
-$ npm run nodemon
-```
-
 And you can view the contents in `localhost` by visiting a browser and going to this URL. Note if you change the port when you run the server, you need to change the port in the URL. The default is 3000.
 
 ```
