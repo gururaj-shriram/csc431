@@ -1,9 +1,9 @@
 /*
   name: app.js
-  modified last by: jerry
+  modified last by: guru
   date last modified: 8 apr 2018
 
-	functions as our download REST controller
+  functions as our download REST controller
 */
 
 var express = require('express');
@@ -12,17 +12,32 @@ var dataConverter = require('./converter/dataconverter')
 var dataManager = require('./db/datamanager')
 var app = express();
 
+const queryString = 'SELECT row_to_json(row(id, ST_AsGeoJSON(geom),wkt)) FROM construccion;';
+
 console.log(dataConverter)
 console.log(dataManager)
+
 // Set port number if it's an argument
 app.set('port', process.env.PORT || 3000);
 
 // we have a single route which exposes the endpoint for this
 // server
 app.get('/download', (req, res) => {
-	// should return data but prints undefined because of
-	// asynchronous; see datamanger for details
-	console.log(dataManager.fetchFromDB("dummy"))
+
+	// Returns data asynchronously into a promise
+	// Until the success callback is called, data has not been received by
+	// the REST controller
+	dataManager.fetchFromDb(queryString)
+		.then((data) => {
+			res.status(200) // success code
+			.json({
+				status: 'success',
+				data: data,
+				message: 'Got data from construccion'
+			});	
+		}, (error) => {
+	
+		});
 });
 
 var server = app.listen(app.get('port'), () => {

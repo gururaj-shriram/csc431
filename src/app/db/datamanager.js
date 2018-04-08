@@ -1,30 +1,37 @@
 /*
   name: datamanager.js
-  modified last by: jerry
+  modified last by: guru
   date last modified: 8 apr 2018
-
 */
-const { Pool, Client } = require('pg')
 
-const client = new Client({
-    user: 'Jerry', // put your username for the db here
+const promise = require('bluebird');
+
+const initOptions = {
+    promiseLib: promise // overriding the default (ES6 Promise);
+};
+
+const pgp = require('pg-promise')(initOptions);
+
+const connection = {
+    user: 'guru', // put your username for the db here
     host: '127.0.0.1', // don't change
     database: 'lasflores', // don't change
     password: '', // possibly, you may have a password
     port: 5432, // don't change
-  })
- client.connect()
+  };
 
-function fetchFromDB(queryString) {
+const db = pgp(connection);
 
-    // TODO: fetchFromDB runs asynchronously and so returns
-    // before data is fetched. we need to use the package
-    // pg-native, pg-sync, or use a promise
-    client.query('SELECT row_to_json(row(id, ST_AsGeoJSON(geom),wkt)) FROM construccion;', (err, res1) => {
-        // prints the data as geoJSON
-        //console.log(res1.rows)
-        return res1.rows
+function fetchFromDb(queryString) {
+
+  // Returns a promise
+  return db.any(queryString, [true])
+    .then(data => {
+        return data;
     })
+    .catch (err => {
+      console.log(err.stack);
+    });
 }
 
-module.exports.fetchFromDB = fetchFromDB
+module.exports.fetchFromDb = fetchFromDb
