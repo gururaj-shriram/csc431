@@ -10,6 +10,8 @@ var express = require('express');
 var reload = require('reload')
 var dataConverter = require('./converter/dataconverter')
 var dataManager = require('./db/datamanager')
+// For fake download page, can delete later
+var dummyIndex = require('./routes/index');
 var app = express();
 
 const queryString = 'SELECT row_to_json(row(id, ST_AsGeoJSON(geom),wkt)) FROM construccion;';
@@ -19,6 +21,9 @@ console.log(dataManager)
 
 // Set port number if it's an argument
 app.set('port', process.env.PORT || 3000);
+
+// For fake download page, can delete later
+app.use(require('./routes/index'));
 
 // we have a single route which exposes the endpoint for this
 // server
