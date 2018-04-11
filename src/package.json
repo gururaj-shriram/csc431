@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "start": "nodemon --watch app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha app/tests"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,14 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "geojson2": "^0.1.8",
+    "mocha": "^5.0.5",
     "nodemon": "^1.17.3",
+    "path": "^0.12.7",
     "pg": "^7.4.1",
     "pg-promise": "^8.2.2",
-    "reload": "^2.2.2"
+    "reload": "^2.2.2",
+    "should": "^13.2.1",
+    "topojson": "^3.0.2"
   }
 }
