@@ -13,7 +13,7 @@ const initOptions = {
 const pgp = require('pg-promise')(initOptions);
 
 const connection = {
-    user: 'guru', // put your username for the db here
+    user: 'Jerry', // put your username for the db here
     host: '127.0.0.1', // don't change
     database: 'lasflores', // don't change
     password: '', // possibly, you may have a password
