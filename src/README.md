@@ -36,7 +36,7 @@ To edit the server, edit `app.js`.
 
 ## Testing
 
-Every `.js` file you write should, if possible and the file is nontrivial, have an associated test file with it in the `tests/` folder. This is to ensure we perform proper TDD. We will be using the `mocha` testing framework and the `should` assertion library. To run all tests:
+Every `.js` file you write should, if possible and the file is nontrivial, have an associated test file with it in the `app/tests` folder. This is to ensure we perform proper TDD. We will be using the `mocha` testing framework and the `chai` assertion library. To run all tests:
 
 ```shell
 $ npm test

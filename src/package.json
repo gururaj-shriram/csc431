@@ -20,7 +20,9 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
     "express": "^4.16.3",
+    "fs": "0.0.1-security",
     "geojson2": "^0.1.8",
     "mocha": "^5.0.5",
     "nodemon": "^1.17.3",
@@ -28,7 +30,6 @@
     "pg": "^7.4.1",
     "pg-promise": "^8.2.2",
     "reload": "^2.2.2",
-    "should": "^13.2.1",
     "topojson": "^3.0.2"
   }
 }

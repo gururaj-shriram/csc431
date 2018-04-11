@@ -10,11 +10,30 @@
 
 var geojson2 = require("geojson2");
 var path = require('path');
+var fs = require('fs');
 
 // Assume inFormat and outFormat are in the form .EXTENSION
 function convertTo(filePath, inFormat, outFormat) {
   const dirname = path.dirname(filePath) + '/';
   const newFileName = path.basename(filePath, inFormat) + outFormat;
+
+  if (fs.stat(filePath), (err, stats) => {
+  	if (err) {
+  		throw err;
+  	} 
+
+  	if (!stats.isFile()) {
+  		throw new Error('Requested file path does not point to a file');
+  	}
+  })
+
+  if (inFormat.charAt(0) !== '.') {
+  	inFormat = '.' + inFormat;
+  } 
+
+  if (outFormat.charAt(0) !== '.') {
+  	outFormat = '.' + outFormat;
+  } 
 
   if (inFormat !== outFormat) {
 
