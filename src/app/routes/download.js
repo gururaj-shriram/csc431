@@ -1,6 +1,6 @@
 /*
   name: download.js
-  modified last by: jerry
+  modified last by: guru
   date last modified: 11 apr 2018
 
   Functions as the download REST controller in SAS diagram
@@ -37,21 +37,23 @@ router.post('/',(req,res) => {
 
     // if ids are specified for the construccion table, in the example 
     // above this would be '1 2 3' 
-    var construcRefs = req.body.construccionIds.trim()
-    var promiseData = getData(construcRefs)
 
-    promiseData.then((data) => {
+    var construcRefs = req.body.construccionIds.trim()
+
+    // Since this is the main body and not in an async function, we need to do a 
+    // .then() to wait for the data
+    getData(construcRefs).then((data) => {
         res.status(200) // success code
         .json({
             status: 'success',
             data: data,
             message: 'Got data from construccion'
-        });	
+        }); 
     });
-
 });
 
-function getData(construcRefs) {
+// Returns a data promise from db 
+async function getData(construcRefs) {
 
     // TODO: these refs probably need to be made general. for instance we
     // will probably receive refs from tables that are not just construccion,
@@ -67,15 +69,12 @@ function getData(construcRefs) {
         const qString = 'SELECT row_to_json(row(id, ST_AsGeoJSON(geom),wkt))'
             + ' FROM construccion WHERE id IN('+ refsAsList +');';
         
-        var promise = dataManager.fetchFromDb(qString).then(function(data) {
-            return data; 
-        });
+        // Since this is called in an async function, data will be properly populated when 
+        // it is returned.
+        var data = await dataManager.fetchFromDb(qString);
 
-        return promise; 
+        return data; 
     }
-
-    
-
 }
 
 /* 
