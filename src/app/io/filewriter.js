@@ -1,6 +1,34 @@
 /*
   name: filewriter.js
   modified last by: jerry
-  date last modified: 8 apr 2018
+  date last modified: 18 apr 2018
   
 */
+
+var fs = require('fs')
+
+function generateFileName(){
+  /* generates a random file name based on the date and a random number */
+  var d = new Date();
+  var fileName = ("0" + d.getFullYear()).slice(-2) + 
+                 ("0" + (d.getMonth()+1)).slice(-2) + d.getDate() +  
+                 ("0" + d.getHours()).slice(-2) +  
+                 ("0" + d.getMinutes()).slice(-2) +
+                 ("0" + d.getSeconds()).slice(-2) +
+                 Math.floor(Math.random() * 10000);
+
+  return fileName; 
+}
+
+function writeToFile(data, path){
+  /* writes a file to a given path */
+  var fileName = generateFileName();
+  fs.writeFileSync(path + fileName + '.' + data['inFormat'],
+    JSON.stringify(data));
+
+  console.log("wrote to: " + path + fileName +'.' + data['inFormat']);
+}
+
+
+
+module.exports.writeToFile = writeToFile

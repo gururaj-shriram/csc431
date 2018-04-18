@@ -1,7 +1,7 @@
 /*
   name: index.js
   modified last by: jerry
-  date last modified: 11 apr 2018
+  date last modified: 18 apr 2018
 
   For fake download page. Most likely a deprecated file
 */
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
             Construccion
             </td>
             <td>
-            <input type="text" name="construccionIds" size="40"/>
+            <input type="text" name="construccion" size="40"/>
             </td>
         </tr>
         <tr>
@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
             Workshop
             </td>
             <td>
-            <input type="text" name="workshopIds" size="40"/>
+            <input type="text" name="workshop_20170210" size="40"/>
             </td>
         </tr>
         <tr>
@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
             Terreno
             </td>
             <td>
-            <input type="text" name="terrenoIds" size="40"/>
+            <input type="text" name="terreno" size="40"/>
             </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@ router.get('/', (req, res) => {
         <tr>
         <td colspan="3" align="center">
         <br/>
-            <input type="submit" name="download" value="Download" />
+            <input type="submit"/>
         </td>
     </tr>
     <table>

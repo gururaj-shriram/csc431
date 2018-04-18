@@ -21,6 +21,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
+    "clean-dir": "^1.0.3",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "geojson2": "^0.1.8",
