@@ -1,7 +1,7 @@
 /*
   name: datamanager.js
   modified last by: jerry
-  date last modified: 18 apr 2018
+  date last modified: 25 apr 2018
 */
 
 const promise = require('bluebird');
@@ -27,7 +27,23 @@ function fetchFromDb(queryString) {
   // Returns a promise
   return db.any(queryString, [true])
     .then(data => {
-        return data;
+        // need to format the geoJSON returned as a feature collection
+        // for conversion 
+        for(var i = 0; i < data.length; i++){
+            data[i]["type"] = "Feature";
+            data[i]["properties"] = { 
+                // table/layer id should be included in the properties
+                // attribute, not as a standalone attribute
+                "id" : data[i].id
+            };
+            delete data[i].id; // safe to remove this attribute 
+        }
+
+        var geojson = {
+            "type": "FeatureCollection",
+            "features": data
+        };
+        return geojson;
     })
     .catch (err => {
       console.log(err.stack);
@@ -35,6 +51,23 @@ function fetchFromDb(queryString) {
 }
 
 function generateQuery(ids,tableName){
+    if(tableName.localeCompare('construccion') == 0){
+        return 'SELECT id, ST_AsGeoJSON(geom)::json as geometry '
+            + ' FROM construccion WHERE id IN('+ ids +');'
+    }else if(tableName.localeCompare('terreno') == 0){
+        return 'SELECT id, ST_AsGeoJSON(geom)::json As geometry'
+            + ' FROM terreno WHERE id IN('+ ids +');'
+    }else if(tableName.localeCompare('workshop_20170210') == 0){
+        return 'SELECT id, ST_AsGeoJSON(geom)::json As geometry'
+            + ' FROM workshop_20170210 WHERE id IN('+ ids +');'
+    }
+    
+    return undefined;
+ }
+
+ /* no longer needed; keep here for research 
+
+function generateQueryOld(ids,tableName){
   if(tableName.localeCompare('construccion') == 0){
       return 'SELECT row_to_json(row(id, ST_AsGeoJSON(geom),"OBJECTID", "CODIGO", '
           +' "TERRENO_CODIGO", "TIPO_CONSTRUCCION", "TIPO_DOMINIO", "NUMERO_PISOS", '
@@ -52,6 +85,8 @@ function generateQuery(ids,tableName){
   
   return undefined;
 }
+
+*/ 
 
 module.exports.fetchFromDb = fetchFromDb
 module.exports.generateQuery = generateQuery

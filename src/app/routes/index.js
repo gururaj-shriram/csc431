@@ -1,7 +1,7 @@
 /*
   name: index.js
   modified last by: jerry
-  date last modified: 18 apr 2018
+  date last modified: 25 apr 2018
 
   For fake download page. Most likely a deprecated file
 */
@@ -57,7 +57,8 @@ router.get('/', (req, res) => {
             &nbsp;&nbsp;
             <input type="radio" name="formattype" value="kml"> KML &nbsp;&nbsp;
             <input type="radio" name="formattype" value="csv"> CSV &nbsp;&nbsp;
-            <input type="radio" name="formattype" value="shapefile"> Shapefile
+            <input type="radio" name="formattype" value="shp"> Shapefile
+            <input type="radio" name="formattype" value="topojson"> topojson
             </td>
         </tr>
         <tr>

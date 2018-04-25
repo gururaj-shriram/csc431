@@ -1,7 +1,7 @@
 /*
   name: filewriter.js
   modified last by: jerry
-  date last modified: 18 apr 2018
+  date last modified: 25 apr 2018
   
 */
 
@@ -20,15 +20,14 @@ function generateFileName(){
   return fileName; 
 }
 
-function writeToFile(data, path){
+function writeToFile(data, path, fileName){
   /* writes a file to a given path */
-  var fileName = generateFileName();
-  fs.writeFileSync(path + fileName + '.' + data['inFormat'],
-    JSON.stringify(data));
+  fs.writeFileSync(path + fileName + '.geojson', JSON.stringify(data));
 
-  console.log("wrote to: " + path + fileName +'.' + data['inFormat']);
+  console.log("wrote to: " + path + fileName +'.geojson');
 }
 
 
 
 module.exports.writeToFile = writeToFile
+module.exports.generateFileName = generateFileName
