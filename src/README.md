@@ -41,3 +41,8 @@ Every `.js` file you write should, if possible and the file is nontrivial, have 
 ```shell
 $ npm test
 ```
+
+## References 
+
+* [GJ.io](http://geojson.io/) checks if your geoJSON is valid 
+
