@@ -1,7 +1,7 @@
 /*
   name: app.js
   modified last by: jerry
-  date last modified: 11 apr 2018
+  date last modified: 30 apr 2018
 */
 
 var express = require('express');
@@ -16,6 +16,7 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 
 // For fake download page, can delete later
+app.use(express.static("public"))
 app.use("/", require('./routes/index'));
 
 // for download REST endpoint

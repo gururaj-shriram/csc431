@@ -57,6 +57,60 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- multimedia table 
+-- 
+
+CREATE TABLE multimedia (
+    id integer NOT NULL,
+    "link" character varying
+);
+
+ALTER TABLE multimedia OWNER TO postgres; 
+
+ALTER TABLE ONLY multimedia
+    ADD CONSTRAINT multimedia PRIMARY KEY (id);
+
+CREATE SEQUENCE multimedia_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE multimedia_id_seq OWNER TO postgres;
+
+ALTER SEQUENCE multimedia_id_seq OWNED BY multimedia.id;
+
+--
+-- table to relate multimedia table to the three layers below 
+-- 
+
+CREATE TABLE multimedia_to_layer (
+    id integer NOT NULL,
+    "multimedia_id" integer NOT NULL,
+    "id_in_layer" integer NOT NULL, 
+    "layer_name" character varying
+);
+
+ALTER TABLE multimedia_to_layer OWNER TO postgres; 
+
+ALTER TABLE ONLY multimedia_to_layer
+    ADD CONSTRAINT multimedia_to_layer PRIMARY KEY (id);
+
+CREATE SEQUENCE multimedia_to_layer_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE multimedia_to_layer_id_seq OWNER TO postgres;
+
+ALTER SEQUENCE multimedia_to_layer_id_seq OWNED BY multimedia_to_layer.id;
+
+--
 -- TOC entry 213 (class 1259 OID 21015)
 -- Name: construccion; Type: TABLE; Schema: public; Owner: postgres
 --

@@ -4,3 +4,9 @@ COPY terreno (id, geom, "OBJECTID", "CODIGO", "CODIGO_ANTERIOR", "SHAPE.AREA", "
 
 COPY workshop_20170210 (id, geom, codigo, fuente, wkt) FROM '/Users/Jerry/Documents/csc431/sample_database/database/workshop_20170210.data';
 
+COPY multimedia (id, link) FROM 
+'/Users/Jerry/Documents/csc431/sample_database/database/multimedia.data';
+
+COPY multimedia_to_layer(id, "multimedia_id", "id_in_layer", "layer_name") FROM 
+'/Users/Jerry/Documents/csc431/sample_database/database/multimedia_to_layer.data';
+
