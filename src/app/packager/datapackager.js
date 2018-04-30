@@ -1,7 +1,7 @@
 /*
   name: datapackager.js 
-  modified last by: jerry
-  date last modified: 8 apr 2018
+  modified last by: guru
+  date last modified: 29 apr 2018
 
 */
 var zipper = require("zip-local");
@@ -10,83 +10,55 @@ var fs = require('fs');
 var md5 = require ('md5');
 var archiver = require ('archiver');
 
-var __dirname = './test';
+// sends a zip file to the client with the contents
+// from the directoryToPackage
+function package(directoryToPackage, outFileName, res) {
 
-//TODO
-//1. set up a zip directory to add the zips to (if it doesn't already exist)
+    // commented out in case it's needed in the future
+    // var raN = randomNames();
 
-//packages async
-
-//cb is a function that looks like:
-//function(filename, err)
-//where filename is the name of the zip archive where the data was saved
-//and err is an err message or null if no error
-
-function package(filePaths, cb) {
-    var raN = randomNames();
-    var output = fs.createWriteStream(__dirname + '/' + raN + '.zip');
-    console.log("Creating stream for file: " + __dirname + '/' + raN + '.zip');
+    // create archiver object
     var archive = archiver('zip', {
         //talk with jerry about the level of compression level
         zlib: { level: 9 } // Sets the compression level.
     });
 
-// listen for all archive data to be written
-// 'close' event is fired only when a file descriptor is involved
-    output.on('close', function() {
-        console.log(archive.pointer() + ' total bytes');
-        console.log('archiver has been finalized and the output file descriptor has closed.');
-        cb(__dirname + '/' + raN + '.zip');
+    // good practice to catch this error explicitly
+    archive.on('error', function(err) {
+        res.status(500).send({error: err.message});
     });
 
-// This event is fired when the data source is drained no matter what was the data source.
-// It is not part of this library but rather from the NodeJS Stream API.
-// @see: https://nodejs.org/api/stream.html#stream_event_end
-    output.on('end', function() {
-        console.log('Data has been drained');
+    // This event is fired when the data source is drained no matter what was the data source.
+    // It is not part of this library but rather from the NodeJS Stream API.
+    // @see: https://nodejs.org/api/stream.html#stream_event_end
+    archive.on('end', function() {
+        console.log('Archive wrote %d bytes', archive.pointer());
     });
 
-// good practice to catch warnings (ie stat failures and other non-blocking errors)
+    // good practice to catch warnings (ie stat failures and other non-blocking errors)
     archive.on('warning', function(err) {
         if (err.code === 'ENOENT') {
             // log warning
+            console.log(err)
         } else {
             // throw error
-            cb(__dirname + '/' + raN + '.zip',  'zip file did not get created');
+            throw err;
         }
     });
 
-// good practice to catch this error explicitly
-    archive.on('error', function(err) {
-        cb(__dirname + '/' + raN + '.zip',  'zip file did not get created');
-    });
+    // send zip file as an attachment to the client
+    res.attachment(outFileName);
 
-// pipe archive data to the file
-    archive.pipe(output);
+    // pipe archive data to the response's attachment
+    archive.pipe(res);
 
-// append a file from stream
-    filePaths.forEach(function(file){
-        archive.append(fs.createReadStream(file), { name: file });
-    })
-
+    // append files from a sub-directory, putting its contents at the root of archive
+    archive.directory(directoryToPackage, false);
     archive.finalize();
-
-
-    //async put all files into an archive
-    //give a random name to the archive
-}
-//packages sync
-function packageSync() {
-
-
 }
 
 function randomNames() {
     return md5(" " + Math.random()*100000);
 }
 
-
-
-
 module.exports.package = package;
-module.exports.packageSync = packageSync;
