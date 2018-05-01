@@ -10,6 +10,7 @@ var express = require('express');
 var fileWriter = require('../io/filewriter');
 var dataConverter = require('../converter/dataconverter');
 var dataManager = require('../db/datamanager');
+var dataPackager = require('../packager/datapackager');
 var bodyParser = require('body-parser');
 var cleandir = require('clean-dir');
 
@@ -20,6 +21,7 @@ var pathToTemp = __dirname + '/../temp/';
 console.log(fileWriter);
 console.log(dataManager);
 console.log(dataConverter);
+console.log(dataPackager);
 // moves all temporary files created to the trash
 cleandir(pathToTemp, function(err) {});
 
@@ -44,6 +46,10 @@ router.post('/', (req, res) => {
   // list of promises containing each request to getData();
   // this holds the results from construccion, terreno, etc.
   var promiseList = [];
+  // list of promises containing each call to convertTo
+  // used to determine when converting is complete and 
+  // packaging can commence
+  var conversionList = [];
   // a list of keys that runs parallel to the promise list
   // this holds the names like "construccion", "terreno", "workshop"
   var keyList = [];
@@ -81,16 +87,23 @@ router.post('/', (req, res) => {
         // it is something other than geoJSON
         console.log('convert me to ' + outFormat);
         if (outFormat !== 'geojson') {
-          dataConverter.convertTo(
-            pathToTemp + fileName + '.geojson',
-            '.geojson',
-            '.' + outFormat
-          );
+          conversionList.push(
+            dataConverter.convertTo(
+              pathToTemp + fileName + '.geojson',
+              '.geojson',
+              '.' + outFormat));
         }
       }
     }
 
-    res.status(200).json(data);
+    // For demo purposes, pass the res obj for a direct download to the browser
+    // If this was integrated, we'd return a file path on the file system instead
+    Promise.all(conversionList).then(() => {
+      console.log('conversions successful')
+      dataPackager.package(pathToTemp, 'data.zip', res);
+    });
+
+    // res.status(200).json(data);
   });
 });
 

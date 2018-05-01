@@ -35,46 +35,64 @@ function convertTo(filePath, inFormat, outFormat) {
   	outFormat = '.' + outFormat;
   } 
 
+  console.log('converting ' + filePath + ' to ' + dirname + newFileName);
+
   if (inFormat !== outFormat) {
 
 	  switch(outFormat) {
 	  	case '.csv':
-	  		geojson2.csv(filePath, dirname + newFileName, (err) => {
-	  			if (err) {
-	  				console.log(err);
-	  			}
-	  		});
+	  		return new Promise((resolve, reject) => {
+                geojson2.csv(filePath, dirname + newFileName, (err) => {
+    	  			if (!err) {
+                        resolve();
+                    } else {
+                        reject(new Error('convertTo ERROR : ' + err));
+                    }
+    	  		});
+            });
 	  		break;
 	  	// Shp files have multiple files. 
 	  	// The third parameter says whether or not to zip them together.
 	  	case '.shp':
-	  		geojson2.shp(filePath, dirname + newFileName, false, (err) => {
-	  			if (err) {
-	  				console.log(err);
-	  			}
-	  		});
+            return new Promise((resolve, reject) => {
+                geojson2.shp(filePath, dirname + newFileName, false, (err) => {
+                    if (!err) {
+                        resolve();
+                    } else {
+                        reject(new Error('convertTo ERROR : ' + err));
+                    }
+                });
+            });
 	  		break;
 	  	case '.kml':
-	  		geojson2.kml(filePath, dirname + newFileName, (err) => {
-	  			if (err) {
-	  				console.log(err);
-	  			}
-	  		});
+            return new Promise((resolve, reject) => {
+                geojson2.kml(filePath, dirname + newFileName, (err) => {
+                    if (!err) {
+                        resolve();
+                    } else {
+                        reject(new Error('convertTo ERROR : ' + err));
+                    }
+                });
+            });
 	  		break;
 	  	case '.topojson':
-	  		geojson2.topojson(filePath, dirname + newFileName, (err) => {
-	  			if (err) {
-	  				console.log(err);
-	  			}
-	  		});
+            return new Promise((resolve, reject) => {
+                geojson2.topojson(filePath, dirname + newFileName, (err) => {
+                    if (!err) {
+                        resolve();
+                    } else {
+                        reject(new Error('convertTo ERROR : ' + err));
+                    }
+                });
+            });
 	  		break;
 	  	default:
 	  		throw new Error('Invalid Argument: ' + outFormat + ' is not a ' +
-	  			'supported outputfile format');
+	  			'supported output file format');
 	  }
   }
 
-  console.log('converted ' + filePath + ' to ' + dirname + newFileName);
+  console.log('convertTo: should only get here if inFormat !== outFormat');
 }
 
 module.exports.convertTo = convertTo

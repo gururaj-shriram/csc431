@@ -46,6 +46,10 @@ function package(directoryToPackage, outFileName, res) {
         }
     });
 
+    if (!outFileName.includes('zip')) {
+        outFileName = outFileName + '.zip';
+    }
+
     // send zip file as an attachment to the client
     res.attachment(outFileName);
 
