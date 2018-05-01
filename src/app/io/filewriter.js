@@ -1,11 +1,21 @@
 /*
   name: filewriter.js
   modified last by: jerry
-  date last modified: 25 apr 2018
+  date last modified: 1 may 2018
   
 */
 
 var fs = require('fs')
+var del = require('del')
+
+function mkdirForRequest(path) {
+  fs.mkdirSync(path);
+  console.log("made directory : " + path);
+}
+
+function removeGJSON(path) {
+  return del([path + '*.geojson']);
+}
 
 function generateFileName(){
   /* generates a random file name based on the date and a random number */
@@ -31,3 +41,5 @@ function writeToFile(data, path, fileName){
 
 module.exports.writeToFile = writeToFile
 module.exports.generateFileName = generateFileName
+module.exports.mkdirForRequest = mkdirForRequest
+module.exports.removeGJSON = removeGJSON

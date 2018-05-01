@@ -1,7 +1,7 @@
 /*
   name: download.js
   modified last by: jerry
-  date last modified: 30 apr 2018
+  date last modified: 1 may 2018
 
   Functions as the download REST controller in SAS diagram
   This is our one (and only) route which exposes the endpoint for this server
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
   // this holds the results from construccion, terreno, etc.
   var promiseList = [];
   // list of promises containing each call to convertTo
-  // used to determine when converting is complete and 
+  // used to determine when converting is complete and
   // packaging can commence
   var conversionList = [];
   // a list of keys that runs parallel to the promise list
@@ -73,9 +73,14 @@ router.post('/', (req, res) => {
       status: 'success',
       inFormat: 'geojson' // input format of the data
     };
+    // create a unique directory name for each request; this name will
+    // also be used for the individual files
+    var dirName = fileWriter.generateFileName();
+    fileWriter.mkdirForRequest(pathToTemp + dirName);
+    data['dirName'] = dirName;
+    var name = dirName + '/' + dirName;
     // valArray[0] is result of promise0
     // valArray[1] is result of promise1, etc.
-    var name = fileWriter.generateFileName();
     for (var i = 0; i < valArray.length; i++) {
       // if getData() did not return undefined, then we received
       // some data, e.g. the results from construccion table
@@ -91,7 +96,9 @@ router.post('/', (req, res) => {
             dataConverter.convertTo(
               pathToTemp + fileName + '.geojson',
               '.geojson',
-              '.' + outFormat));
+              '.' + outFormat
+            )
+          );
         }
       }
     }
@@ -99,8 +106,22 @@ router.post('/', (req, res) => {
     // For demo purposes, pass the res obj for a direct download to the browser
     // If this was integrated, we'd return a file path on the file system instead
     Promise.all(conversionList).then(() => {
-      console.log('conversions successful')
-      dataPackager.package(pathToTemp, 'data.zip', res);
+      console.log('conversions successful');
+      if (outFormat !== 'geojson') {
+        // if desired output format is not geojson, clear out the directory
+        // of geoJSON files
+        fileWriter
+          .removeGJSON(pathToTemp + data['dirName'] + '/')
+          .then(paths => {
+            // removal is done asynchronously, probably best practice
+            console.log('files deleted:\n', paths.join('\n'));
+            dataPackager.package(pathToTemp + data['dirName'], 'data.zip', res);
+          });
+      } else {
+        // just package the geojson
+        dataPackager.package(pathToTemp + data['dirName'], 'data.zip', res);
+      }
+      
     });
 
     // res.status(200).json(data);

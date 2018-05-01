@@ -1,13 +1,11 @@
 /*
   name: datapackager.js 
-  modified last by: guru
-  date last modified: 29 apr 2018
+  modified last by: jerry
+  date last modified: 1 may 2018
 
 */
-var zipper = require("zip-local");
 var path = require('path');
 var fs = require('fs');
-var md5 = require ('md5');
 var archiver = require ('archiver');
 
 // sends a zip file to the client with the contents
@@ -61,8 +59,8 @@ function package(directoryToPackage, outFileName, res) {
     archive.finalize();
 }
 
-function randomNames() {
+/*function randomNames() {
     return md5(" " + Math.random()*100000);
-}
+}*/
 
 module.exports.package = package;
