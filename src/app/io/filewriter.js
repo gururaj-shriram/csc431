@@ -10,15 +10,8 @@ var fs = require('fs-extra');
 var del = require('del');
 
 function mkdirForRequest(path) {
-  fs.ensureDir(path)
-  .then(() => {
-    console.log("made directory : " + path);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-  //fs.mkdirSync(path);
-  //console.log('made directory : ' + path);
+  fs.mkdirSync(path);
+  console.log('made directory : ' + path);
 }
 
 function removeGJSON(path) {
