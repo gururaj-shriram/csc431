@@ -19,6 +19,7 @@
   "homepage": "https://github.com/jerrybonnell/csc431#readme",
   "dependencies": {
     "archiver": "^2.1.1",
+    "async": "^2.6.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
