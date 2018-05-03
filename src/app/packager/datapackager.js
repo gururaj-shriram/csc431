@@ -1,7 +1,7 @@
 /*
   name: datapackager.js 
-  modified last by: jerry
-  date last modified: 1 may 2018
+  modified last by: guru
+  date last modified: 2 may 2018
 
 */
 var path = require('path');
@@ -44,7 +44,7 @@ function package(directoryToPackage, outFileName, res) {
         }
     });
 
-    if (!outFileName.includes('zip')) {
+    if (outFileName.indexOf('zip') < -1) {
         outFileName = outFileName + '.zip';
     }
 

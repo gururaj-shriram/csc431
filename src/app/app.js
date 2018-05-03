@@ -1,12 +1,11 @@
 /*
   name: app.js
-  modified last by: jerry
-  date last modified: 30 apr 2018
+  modified last by: guru
+  date last modified: 2 may 2018
 */
 
 var express = require('express');
 var reload = require('reload')
-
 
 // For fake download page, can delete later
 //var dummyIndex = require('./routes/index');
@@ -28,3 +27,5 @@ var server = app.listen(app.get('port'), () => {
 });
 
 reload(app);
+
+module.exports = app;
