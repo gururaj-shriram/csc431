@@ -5,30 +5,43 @@
   
 */
 
-var fs = require('fs');
+//var fs = require('fs');
+var fs = require('fs-extra');
 var del = require('del');
 
 function mkdirForRequest(path) {
-  fs.mkdirSync(path);
-  console.log('made directory : ' + path);
+  fs.ensureDir(path)
+  .then(() => {
+    console.log("made directory : " + path);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+  //fs.mkdirSync(path);
+  //console.log('made directory : ' + path);
 }
 
 function removeGJSON(path) {
   return del([path + '*.geojson']);
 }
 
-function copyLinkedMultimedia(mediaData, folderDir) {
+async function copyLinkedMultimedia(mediaData, folderDir) {
   // copies multimedia data from its source directory (note that 
   // when this method is called, the multimedia links still have their
   // absolute path), to the temp directory for packaging later
-  for (var i = 0; i < mediaData.length; i++) {
-    var filename = mediaData[i].link.substring(
-      mediaData[i].link.lastIndexOf('/') + 1
-    );
-    // TODO: the operation is synchronous... 
-    if (!fs.existsSync(folderDir + filename)) {
-      fs.copyFileSync(mediaData[i].link, folderDir + filename);
+  try {
+    for (var i = 0; i < mediaData.length; i++) {
+      var filename = mediaData[i].link.substring(
+        mediaData[i].link.lastIndexOf('/') + 1
+      );
+
+      //if (!fs.existsSync(folderDir + filename)) {
+      await fs.copy(mediaData[i].link, folderDir + filename);
+      console.log("copied " + mediaData[i].link);
+      //}
     }
+  } catch (err) {
+    console.error(err);
   }
 }
 
@@ -50,7 +63,7 @@ function generateFileName() {
 function writeToFile(data, path, fileName) {
   /* writes a file to a given path */
   fs.writeFileSync(path + fileName + '.geojson', JSON.stringify(data));
-
+  
   console.log('wrote to: ' + path + fileName + '.geojson');
 }
 

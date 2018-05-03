@@ -37,7 +37,7 @@ To edit the server, edit `app.js`.
 ## Multimedia Data 
 
 As part of our requirements, our server must retrieve any multimedia data 
-corresponding to references we receive and, should that media data exist,    
+corresponding to references we receive and, should that media data exist, 
 download it. We have created some mock multimedia data and modified the
 las flores schema to exercise this part of the pipeline. Here are some 
 instructions to load this data into your local instance. 
