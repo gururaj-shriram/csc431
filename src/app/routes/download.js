@@ -1,7 +1,7 @@
 /*
   name: download.js
   modified last by: jerry
-  date last modified: 1 may 2018
+  date last modified: 3 may 2018
 
   Functions as the download REST controller in SAS diagram
   This is our one (and only) route which exposes the endpoint for this server
@@ -56,11 +56,14 @@ router.post('/', (req, res) => {
   //output format for the data
   var outFormat = req.body.formattype.trim();
 
+  var dirName = fileWriter.generateFileName();
+  fileWriter.mkdirForRequest(pathToTemp + dirName);
+
   // get data for all the given references
   Object.keys(req.body).forEach(function(key) {
     console.log('key : ' + key + ', value: ' + req.body[key]);
     var refs = req.body[key].trim();
-    promiseList.push(getData(refs, key));
+    promiseList.push(getData(refs, key, pathToTemp + dirName + '/'));
     keyList.push(key);
   });
 
@@ -75,8 +78,6 @@ router.post('/', (req, res) => {
     };
     // create a unique directory name for each request; this name will
     // also be used for the individual files
-    var dirName = fileWriter.generateFileName();
-    fileWriter.mkdirForRequest(pathToTemp + dirName);
     data['dirName'] = dirName;
     var name = dirName + '/' + dirName;
     // valArray[0] is result of promise0
@@ -115,13 +116,20 @@ router.post('/', (req, res) => {
           .then(paths => {
             // removal is done asynchronously, probably best practice
             console.log('files deleted:\n', paths.join('\n'));
-            dataPackager.package(pathToTemp + data['dirName'], 'data.zip', res);
+            dataPackager.package(
+              pathToTemp + data['dirName'],
+              data['dirName'] + '.zip',
+              res
+            );
           });
       } else {
         // just package the geojson
-        dataPackager.package(pathToTemp + data['dirName'], 'data.zip', res);
+        dataPackager.package(
+          pathToTemp + data['dirName'],
+          data['dirName'] + '.zip',
+          res
+        );
       }
-      
     });
 
     // res.status(200).json(data);
@@ -129,7 +137,7 @@ router.post('/', (req, res) => {
 });
 
 // Returns a data promise from db
-async function getData(refs, tableName) {
+async function getData(refs, tableName, folderName) {
   if (refs.trim().length > 0) {
     // converts the field input "1 2 3" into a comma-delimited string,
     // i.e., "1, 2, 3". input refs can be delimited by anything,
@@ -141,13 +149,26 @@ async function getData(refs, tableName) {
     // now fetch data from database for these ids
     const qString = dataManager.generateQuery(refsAsList, tableName);
     if (qString !== undefined) {
+      // first grab multimedia data, if any 
+      const mediaQString = dataManager.generateMultimediaQuery(
+        refsAsList,
+        tableName
+      );
       // Since this is called in an async function, data will be
       // properly populated when it is returned.
-      var data = await dataManager.fetchFromDb(qString);
-
+      var mediaData = await dataManager.fetchFromDbMultimedia(mediaQString);
+      if (mediaData !== undefined) {
+        // if there was media data, then copy it to the temp folder location
+        // as tim says, multimedia is a "direct download"
+        fileWriter.copyLinkedMultimedia(mediaData, folderName);
+      }
+      // next, fetch the geospatial data from the database; this requires 
+      // further processing so we return this data; also note the await 
+      var data = await dataManager.fetchFromDb(qString, mediaData);
       return data;
     }
   }
+
   return undefined;
 }
 
