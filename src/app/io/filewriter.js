@@ -1,7 +1,7 @@
 /*
   name: filewriter.js
-  modified last by: jerry
-  date last modified: 3 may 2018
+  modified last by: guru
+  date last modified: 4 may 2018
   
 */
 
@@ -55,12 +55,27 @@ function generateFileName() {
 
 function writeToFile(data, path, fileName) {
   /* writes a file to a given path */
+  return new Promise((resolve, reject) => {
+    fs.writeFile(path + fileName + '.geojson', JSON.stringify(data), (err) => {
+        if (!err) {
+            console.log('wrote to: ' + path + fileName + '.geojson');
+            resolve();
+        } else {
+            reject(new Error('writeToFile ERROR : ' + err));
+        }
+    });
+  });
+}
+
+function writeToFileSync(data, path, fileName) {
+  /* writes a file to a given path */
   fs.writeFileSync(path + fileName + '.geojson', JSON.stringify(data));
   
   console.log('wrote to: ' + path + fileName + '.geojson');
 }
 
 module.exports.writeToFile = writeToFile;
+module.exports.writeToFileSync = writeToFileSync;
 module.exports.generateFileName = generateFileName;
 module.exports.mkdirForRequest = mkdirForRequest;
 module.exports.removeGJSON = removeGJSON;

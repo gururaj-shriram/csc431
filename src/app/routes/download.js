@@ -1,7 +1,7 @@
 /*
   name: download.js
-  modified last by: jerry
-  date last modified: 3 may 2018
+  modified last by: guru
+  date last modified: 4 may 2018
 
   Functions as the download REST controller in SAS diagram
   This is our one (and only) route which exposes the endpoint for this server
@@ -88,24 +88,34 @@ router.post('/', (req, res) => {
       if (valArray[i] !== undefined) {
         data[keyList[i]] = valArray[i];
         var fileName = name + '-' + keyList[i];
-        fileWriter.writeToFile(valArray[i], pathToTemp, fileName);
-        // convert the data to the desired output format, only if
-        // it is something other than geoJSON
-        console.log('convert me to ' + outFormat);
-        if (outFormat !== 'geojson') {
-          conversionList.push(
-            dataConverter.convertTo(
-              pathToTemp + fileName + '.geojson',
-              '.geojson',
-              '.' + outFormat
-            )
-          );
-        }
+
+        // make the conversion promise resolve after 
+        // file writing AND conversion
+        conversionList.push(
+          fileWriter.writeToFile(valArray[i], pathToTemp, fileName).then((err) => {
+            // convert the data to the desired output format, only if
+            // it is something other than geoJSON
+            if (err) {
+              console.log('filewriter error: ' + err);
+              throw err;
+            } 
+
+            console.log('convert me to ' + outFormat);
+            if (outFormat !== 'geojson') {
+              return dataConverter.convertTo(
+                  pathToTemp + fileName + '.geojson',
+                  '.geojson',
+                  '.' + outFormat
+              );
+            }  
+          })
+        );
       }
     }
 
     // For demo purposes, pass the res obj for a direct download to the browser
     // If this was integrated, we'd return a file path on the file system instead
+    // Begin packaging after both writing the geojson files AND conversion
     Promise.all(conversionList).then(() => {
       console.log('conversions successful');
       if (outFormat !== 'geojson') {

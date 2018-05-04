@@ -1,7 +1,7 @@
 /*
   name: download-test.js 
   modified last by: guru
-  date last modified: 2 may 2018
+  date last modified: 4 may 2018
 
   end to end download integration test
   also a proof-of-work of the datapackager since a zip file results
@@ -33,6 +33,8 @@ const options = {
 function httpPost(url, callback) {
   request(options,
     function(err, res, body) {
+      res.statusCode.should.equal(200);
+      res.headers['content-type'].should.contain('application/zip');
       callback(err, body);
     }
   );
@@ -65,20 +67,6 @@ describe('end to end download test', () => {
     let urls = [];
 
     for (let i = 0; i < 10; i++) {
-      urls.push(url);
-    }
-
-    async.map(urls, httpPost, function (err, res){
-      if (err) return console.log(err);
-      done();
-    });
-  });
-
-  it('should take in 100 simultaneous requests', function(done) {
-    this.timeout(2000);
-    let urls = [];
-
-    for (let i = 0; i < 100; i++) {
       urls.push(url);
     }
 
