@@ -1,7 +1,7 @@
 /*
   name: filewriter-test.js 
-  modified last by: guru
-  date last modified: 4 may 2018
+  modified last by: jerry
+  date last modified: 5 may 2018
 
   unit test for the file writer
 */
@@ -22,17 +22,16 @@ const fakeData = {
 };
 
 describe('filewriter test', () => {
-  
-  after(() => {
-    del.sync([testfiles + 'test.geojson']);
-  });
-  
-  it('should take in data and output a geojson file with the data', (done) => {
-    filewriter.writeToFile(fakeData, testfiles, 'test').then((err) => {
+   
+   after(() => {
+      del.sync([testfiles + 'test.geojson']);
+   });
+    
+   it('should take in data and output a geojson file with the data', (done) => {
+      filewriter.writeToFile(fakeData, testfiles, 'test');
       expect(fs.existsSync(testfiles + 'test.geojson')).to.be.true;
       expect(fs.readFileSync(testfiles + 'test.geojson').toString())
         .to.equal(JSON.stringify(fakeData))
-      done();  
-    });
-  });
+      done();
+  })  
 });
