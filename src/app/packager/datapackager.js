@@ -45,7 +45,7 @@ function package(directoryToPackage, outFileName, res) {
         }
     });
 
-    if (outFileName.indexOf('zip') < -1) {
+    if (outFileName.indexOf('zip') <= -1) {
         outFileName = outFileName + '.zip';
     }
 
