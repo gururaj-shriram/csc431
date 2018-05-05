@@ -14,6 +14,8 @@ to expedite the process of receiving land titles.
 
 * See `srs/srs.pdf` for the team SRS document. 
 * See `sas/sas.pdf` for the team SAS document. 
+* See `presentation/` for the talks given in the course.
+* See `sample_database/` for a mock back-end, courtsey of our client.  
 * See the `src/` directory for the source code and guidelines on 
 how to build and run the project. 
 
