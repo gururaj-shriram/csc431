@@ -1,16 +1,18 @@
 /*
   name: download.js
-  modified last by: jerry
+  modified last by: guru
   date last modified: 5 may 2018
 
   Functions as the download REST controller in SAS diagram
   This is our one (and only) route which exposes the endpoint for this server
 */
+
 var express = require('express');
 var fileWriter = require('../io/filewriter');
 var dataConverter = require('../converter/dataconverter');
 var dataManager = require('../db/datamanager');
 var dataPackager = require('../packager/datapackager');
+var utils = require('../utils/utils');
 var bodyParser = require('body-parser');
 var cleandir = require('clean-dir');
 
@@ -18,10 +20,11 @@ var router = express.Router();
 
 var pathToTemp = __dirname + '/../temp/';
 
-console.log(fileWriter);
-console.log(dataManager);
-console.log(dataConverter);
-console.log(dataPackager);
+utils.logExceptOnTest(fileWriter);
+utils.logExceptOnTest(dataManager);
+utils.logExceptOnTest(dataConverter);
+utils.logExceptOnTest(dataPackager);
+utils.logExceptOnTest(utils);
 // moves all temporary files created to the trash
 cleandir(pathToTemp, function(err) {});
 
@@ -42,7 +45,7 @@ router.post('/', (req, res) => {
 
   // if ids are specified for the construccion table, in the example
   // above this would be '1 2 3'
-  console.log(req.body);
+  utils.logExceptOnTest(req.body);
   // list of promises containing each request to getData();
   // this holds the results from construccion, terreno, etc.
   var promiseList = [];
@@ -61,7 +64,7 @@ router.post('/', (req, res) => {
 
   // get data for all the given references
   Object.keys(req.body).forEach(function(key) {
-    console.log('key : ' + key + ', value: ' + req.body[key]);
+    utils.logExceptOnTest('key : ' + key + ', value: ' + req.body[key]);
     var refs = req.body[key].trim();
     promiseList.push(getData(refs, key, pathToTemp + dirName + '/'));
     keyList.push(key);
@@ -91,7 +94,7 @@ router.post('/', (req, res) => {
         fileWriter.writeToFile(valArray[i], pathToTemp, fileName);
         // convert the data to the desired output format, only if
         // it is something other than geoJSON
-        console.log('convert me to ' + outFormat);
+        utils.logExceptOnTest('convert me to ' + outFormat);
         if (outFormat !== 'geojson') {
           conversionList.push(
             dataConverter.convertTo(
@@ -107,7 +110,7 @@ router.post('/', (req, res) => {
     // For demo purposes, pass the res obj for a direct download to the browser
     // If this was integrated, we'd return a file path on the file system instead
     Promise.all(conversionList).then(() => {
-      console.log('conversions successful');
+      utils.logExceptOnTest('conversions successful');
       if (outFormat !== 'geojson') {
         // if desired output format is not geojson, clear out the directory
         // of geoJSON files
@@ -115,7 +118,7 @@ router.post('/', (req, res) => {
           .removeGJSON(pathToTemp + data['dirName'] + '/')
           .then(paths => {
             // removal is done asynchronously, probably best practice
-            console.log('files deleted:\n', paths.join('\n'));
+            utils.logExceptOnTest('files deleted:\n' + paths.join('\n'));
             dataPackager.package(
               pathToTemp + data['dirName'],
               data['dirName'] + '.zip',

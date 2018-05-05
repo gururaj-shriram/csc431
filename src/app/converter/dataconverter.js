@@ -1,13 +1,14 @@
 /*
   name: dataconverter.js 
   modified last by: guru
-  date last modified: 11 apr 2018
+  date last modified: 5 may 2018
 
 */
 
 // Note: Some conversions require ogr2ogr
 // brew install gdal
 
+var utils = require('../utils/utils');
 var geojson2 = require("geojson2");
 var path = require('path');
 var fs = require('fs');
@@ -35,7 +36,7 @@ function convertTo(filePath, inFormat, outFormat) {
   	outFormat = '.' + outFormat;
   } 
 
-  console.log('converting ' + filePath + ' to ' + dirname + newFileName);
+  utils.logExceptOnTest('converting ' + filePath + ' to ' + dirname + newFileName);
 
   if (inFormat !== outFormat) {
 
@@ -92,7 +93,7 @@ function convertTo(filePath, inFormat, outFormat) {
 	  }
   }
 
-  console.log('convertTo: should only get here if inFormat !== outFormat');
+  utils.logExceptOnTest('convertTo: should only get here if inFormat !== outFormat');
 }
 
 module.exports.convertTo = convertTo

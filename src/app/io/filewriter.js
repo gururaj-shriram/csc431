@@ -1,17 +1,17 @@
 /*
   name: filewriter.js
-  modified last by: jerry
+  modified last by: guru
   date last modified: 5 may 2018
-  
 */
 
 //var fs = require('fs');
 var fs = require('fs-extra');
 var del = require('del');
+var utils = require('../utils/utils')
 
-function mkdirForRequest(path) {
+function mkdirForRequest(path) { 
   fs.mkdirSync(path);
-  console.log('made directory : ' + path);
+  utils.logExceptOnTest('made directory : ' + path);
 }
 
 function removeGJSON(path) {
@@ -30,7 +30,7 @@ async function copyLinkedMultimedia(mediaData, folderDir) {
 
       //if (!fs.existsSync(folderDir + filename)) {
       await fs.copy(mediaData[i].link, folderDir + filename);
-      console.log("copied " + mediaData[i].link);
+      utils.logExceptOnTest("copied " + mediaData[i].link);
       //}
     }
   } catch (err) {
@@ -48,7 +48,7 @@ function generateFileName() {
     ('0' + d.getHours()).slice(-2) +
     ('0' + d.getMinutes()).slice(-2) +
     ('0' + d.getSeconds()).slice(-2) +
-    Math.floor(Math.random() * 10000);
+    Math.floor(Math.random() * 1000000000);
 
   return fileName;
 }
@@ -71,7 +71,7 @@ function writeToFile(data, path, fileName) {
   /* writes a file to a given path */
   fs.writeFileSync(path + fileName + '.geojson', JSON.stringify(data));
   
-  console.log('wrote to: ' + path + fileName + '.geojson');
+  utils.logExceptOnTest('wrote to: ' + path + fileName + '.geojson');
 }
 
 module.exports.writeToFile = writeToFile;

@@ -1,10 +1,12 @@
 /*
   name: filewriter-test.js 
-  modified last by: jerry
+  modified last by: guru
   date last modified: 5 may 2018
 
   unit test for the file writer
 */
+
+process.env.NODE_ENV = 'test';
 
 var filewriter = require('../io/filewriter');
 var chai = require('chai');

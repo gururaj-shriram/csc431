@@ -1,10 +1,12 @@
 /*
   name: server-test.js
   modified last by: guru
-  date last modified: 2 may 2018
+  date last modified: 5 may 2018
 
   basic test to verify server is working
 */
+
+process.env.NODE_ENV = 'test';
 
 const supertest = require('supertest');
 const app = require('../app')

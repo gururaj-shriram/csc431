@@ -1,10 +1,12 @@
 /*
   name: dataconverter-test.js 
   modified last by: guru
-  date last modified: 2 may 2018
+  date last modified: 5 may 2018
 
   unit test for data converter
 */
+
+process.env.NODE_ENV = 'test';
 
 var chai = require('chai');
 var del = require('del');

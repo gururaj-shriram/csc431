@@ -1,9 +1,10 @@
 /*
   name: datamanager.js
-  modified last by: jerry
-  date last modified: 3 may 2018
+  modified last by: guru
+  date last modified: 5 may 2018
 */
 
+const utils = require('../utils/utils');
 const promise = require('bluebird');
 
 const initOptions = {
@@ -30,7 +31,7 @@ function fetchFromDbMultimedia(queryString) {
       return data;
     })
     .catch(err => {
-      console.log(err.stack);
+      utils.logExceptOnTest(err.stack);
     });
 }
 
@@ -59,7 +60,7 @@ function fetchFromDb(queryString, mediaData) {
       return geojson;
     })
     .catch(err => {
-      console.log(err.stack);
+      utils.logExceptOnTest(err.stack);
     });
 }
 

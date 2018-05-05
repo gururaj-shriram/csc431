@@ -1,9 +1,10 @@
 /*
   name: datapackager.js 
   modified last by: guru
-  date last modified: 2 may 2018
-
+  date last modified: 5 may 2018
 */
+
+var utils = require('../utils/utils');
 var path = require('path');
 var fs = require('fs');
 var archiver = require ('archiver');
@@ -30,14 +31,14 @@ function package(directoryToPackage, outFileName, res) {
     // It is not part of this library but rather from the NodeJS Stream API.
     // @see: https://nodejs.org/api/stream.html#stream_event_end
     archive.on('end', function() {
-        console.log('Archive wrote %d bytes', archive.pointer());
+        utils.logExceptOnTest('Archive wrote ' + archive.pointer() + ' bytes');
     });
 
     // good practice to catch warnings (ie stat failures and other non-blocking errors)
     archive.on('warning', function(err) {
         if (err.code === 'ENOENT') {
             // log warning
-            console.log(err)
+            utils.logExceptOnTest(err)
         } else {
             // throw error
             throw err;
