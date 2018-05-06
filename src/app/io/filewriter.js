@@ -1,13 +1,14 @@
 /*
   name: filewriter.js
-  modified last by: guru
+  modified last by: jerry
   date last modified: 5 may 2018
 */
 
 //var fs = require('fs');
 var fs = require('fs-extra');
 var del = require('del');
-var utils = require('../utils/utils')
+var cpFile = require('cp-file');
+var utils = require('../utils/utils');
 
 function mkdirForRequest(path) { 
   fs.mkdirSync(path);
@@ -18,7 +19,7 @@ function removeGJSON(path) {
   return del([path + '*.geojson']);
 }
 
-async function copyLinkedMultimedia(mediaData, folderDir) {
+/*async function copyLinkedMultimedia2(mediaData, folderDir) {
   // copies multimedia data from its source directory (note that 
   // when this method is called, the multimedia links still have their
   // absolute path), to the temp directory for packaging later
@@ -36,6 +37,26 @@ async function copyLinkedMultimedia(mediaData, folderDir) {
   } catch (err) {
     console.error(err);
   }
+} */
+
+function copyLinkedMultimedia(mediaData, folderDir) {
+  // copies multimedia data from its source directory (note that 
+  // when this method is called, the multimedia links still have their
+  // absolute path), to the temp directory for packaging later
+  var pList = []; 
+  for (var i = 0; i < mediaData.length; i++) {
+    var filename = mediaData[i].link.substring(
+      mediaData[i].link.lastIndexOf('/') + 1
+    );
+
+    pList.push(cpFile(mediaData[i].link, folderDir + filename)); 
+  }
+
+  Promise.all(pList).then(() => {
+    utils.logExceptOnTest("copied files");
+    return pList; 
+  });
+
 }
 
 function generateFileName() {
