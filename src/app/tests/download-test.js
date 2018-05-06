@@ -1,6 +1,6 @@
 /*
   name: download-test.js 
-  modified last by: jerry
+  modified last by: guru
   date last modified: 6 may 2018
 
   end to end download integration test
@@ -47,7 +47,6 @@ function httpPost(url, callback) {
 }
 
 describe('end to end download test', function () {
-  this.timeout(5000);
   
   it('should take in table parameters and output a zip file', (done) => {
     request(options, (err, res, body) => {
@@ -70,7 +69,8 @@ describe('end to end download test', function () {
     });
   });
 
-  it('should take in 10 simultaneous requests', (done) => {
+  it('should take in 10 simultaneous requests', function(done) {
+    this.timeout(5000);
     let urls = [];
 
     for (let i = 0; i < 10; i++) {
