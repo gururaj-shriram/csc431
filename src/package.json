@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "start": "nodemon --watch app",
-    "test": "mocha app/tests --exit --no-deprecation"
+    "test": "mocha app/tests.js --exit --no-deprecation"
   },
   "repository": {
     "type": "git",
