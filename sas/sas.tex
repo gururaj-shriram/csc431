@@ -143,6 +143,8 @@ Following is the sequence diagram for the download use case. This is the core fu
 	\end{center}
 \end{figure}
 
+When a user clicks the download button on the search page, an HTTP POST request is sent to our web server, which calls on our REST controller to handle the request and retrieve the output data in the following way. For each file, FileWriter generates a file, then a call is made to DataManager to generate queries that fetch the desired data from the storage database. The database returns the data in its stored format, and FileWriter writes this data to the file. DataConverter is then called to convert the data from the stored format to the desired output format. At the very end, DataPackager is called to package all of the download files into a single URI that is returned to the user.
+
 \clearpage
 
 \section{Structural Design}
