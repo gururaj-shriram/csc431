@@ -1,7 +1,7 @@
 %
 % latex template for SAS documentation 
 % name: sas.tex 
-% date last modified: 5 may 2018
+% date last modified: 6 may 2018
 % modified by: jerry
 % 
 %
@@ -45,7 +45,7 @@
 	\hline
 	\textbf{Version} & \textbf{Date} & \textbf{Author(s)} & \textbf{Change Comments} \\
 	\hline
-	2 & \today & Jerry Bonnell and Gururaj Shriram & Final Draft \\ 
+	2 & \today & Jerry Bonnell, Re Chang, Lixiong Liang & Final Draft \\ 
 	\hline
 	1 & April 4, 2018 & Jerry Bonnell and Gururaj Shriram & First Draft \\
 	\hline
@@ -64,11 +64,11 @@
 
 \subsection{System Overview}
 
-The System will be comprised of four main parts: a data manager, data packager, data converter, and REST controller. The data manager will control the connection to the database and handle database queries. The data packager will package all requested pieces of data into a compressed file if multiple pieces of data are requested. The data converter will convert data from the database into the user's desired format. This format can be any of the supported file formats: kml, esri Shapefile, csv, or geoJSON. The REST controller will manage all of the other aspects of the system and manage the end-to-end pipeline of the downloading process. \\
+The System will be comprised of four main parts: a data manager, data packager, data converter, and REST controller. The data manager will control the connection to the database and handle database queries.\footnote{This is later to be replaced by a call to a database API.} The data packager will package all requested pieces of data into a compressed file if multiple pieces of data are requested. The data converter will convert data from the database into the user's desired format. This format can be any of the supported file formats: kml, esri Shapefile, csv, or geoJSON. The REST controller will manage all of the other aspects of the system and manage the end-to-end pipeline of the downloading process. \\
 
 This pipeline is as follows: (1) the browser submits a download request to the download server which the REST controller listens to, (2) the controller initiates the process of querying data from the database based on the list of layers provided by the browser request, (3) the data is then converted to the requested output format, and (4) the server packages data before submitting it to the browser for local download. \\ 
 
-The three-tier architecture will be used for this project. The client-server tier allows the download server to handle requests from the search team. The database-centric tier queries the database to obtain geospatial data. The business layer performs the conversion and archival of this data, before the client-server tier sends the packaged data back to client.   
+The three-tier architecture will be used for this project. The client-server tier allows the download server to handle requests from the search team. The database-centric tier queries the database to obtain geospatial and multimedia data. The business layer performs the conversion and archival of this data, before the client-server tier sends the packaged data back to client.   
 
 \subsection{System Diagram}
 
@@ -83,7 +83,8 @@ The three-tier architecture will be used for this project. The client-server tie
 
 \subsection{Actor Identification}
 
-There are three types of human actors: unauthorized users, authorized users, and the administrators. Unauthorized users may only download public pieces of data unless they are granted permission to specific pieces of data from an administrator. Authorized users are allowed to download any piece of data. Administrators are able to download any piece of data as well as approve requests for unauthorized users to download private pieces of data. There are currently no plans for the system to support non-human actors, i.e. with an API. 
+There are three types of human actors: unauthorized users, authorized users, and the administrators. Unauthorized users may only download public pieces of data unless they are granted permission to specific pieces of data from an administrator. Authorized users are allowed to download any piece of data. Administrators are able to download any piece of data as well as approve requests for unauthorized users to download private pieces of data. The system must also support interaction with a non-human actor, i.e., an API, in order to retrieve
+required data. 
 
 \subsection{Design Rationale}
 
@@ -134,7 +135,9 @@ Further, from the list of layers, our server must be able to gather geospatial d
 
 \section{Functional Design}
 
-Following is the sequence diagram for the download use case. This is the core functionality for this system since it is the only required use case. 
+Here we present the sequence diagram for the download use case. This
+outlines the core functionality for this system. Following it are 
+clarifications regarding the diagram. 
 
 \begin{figure}[H]
 	\begin{center}
@@ -143,7 +146,27 @@ Following is the sequence diagram for the download use case. This is the core fu
 	\end{center}
 \end{figure}
 
-When a user clicks the download button on the search page, an HTTP POST request is sent to our web server, which calls on our REST controller to handle the request and retrieve the output data in the following way. For each file, FileWriter generates a file, then a call is made to DataManager to generate queries that fetch the desired data from the storage database. The database returns the data in its stored format, and FileWriter writes this data to the file. DataConverter is then called to convert the data from the stored format to the desired output format. At the very end, DataPackager is called to package all of the download files into a single URI that is returned to the user.
+\begin{itemize}
+	\item When a user clicks the download button on the search page, an HTTP 
+	POST request is sent to our web server, which calls on our REST controller 
+	to handle the request and retrieve the required data. 
+	\item The controller will then call FileWriter to generate a unique 
+	name for the request directory and the files contained inside. Using this 
+	name, a folder is created. 
+	\item For each layer, a call is made to DataManager to generate queries 
+	that fetch the desired data (both multimedia and geospatial) for the given 
+	references from the storage database. On the production machine, a call 
+	would instead be made to the backend's API for retrieval. 
+	\item The database returns data in its stored format, and 
+	FileWriter writes this data to file.
+	\item For geospatial data, DataConverter is invoked to convert the data  
+	from its stored format to the desired output format (if necessary). No 
+	conversion is necessary for returned multimedia data.
+	\item GeoJSON files are deleted from the directory if not requested. 
+	At the very end, DataPackager is called to package all of the 
+	download files into a single URI that is returned to the search.
+
+\end{itemize}
 
 \clearpage
 
@@ -158,6 +181,13 @@ A primary focus for this design is modularity.
 		\includegraphics[width=\textwidth]{images/class_diagram.pdf}
 	\end{center}
 \end{figure}
+
+An asterisk is here required. The DataManager outlined here  
+interfaces with the database and, as such, carries the responsibility for 
+generating queries. Strictly speaking, this does not adhere to the requirements. 
+In its place, a call should be made to the backend's API for retrieval
+of the data. We expect most of the DataManager's methods to be deprecated 
+and replaced by an API call on the production machine.
 
 \end{document}
 	
