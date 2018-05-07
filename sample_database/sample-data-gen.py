@@ -1,7 +1,7 @@
 """
 name: sample-data-gen.py
-modified last by: jerry
-date last modified: 2 may 2018
+modified last by: guru
+date last modified: 7 may 2018
 
 generates random multimedia references for database; probably won't need to run
 this script again, but here for research   
@@ -16,7 +16,7 @@ MULTIMEDIA_LEN = 6
 DELIMITER = "	"
 
 sizes_list = [CONSTRUCCION_LEN, TERRENO_LEN, WORKSHOP_LEN]
-list_names = ["construccion", "terreno", "workshop"]
+list_names = ["construccion", "terreno", "workshop_20170210"]
 media_lis = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg',
              'audio1.mp3', 'video1.m4v']
 combinations_dict = {}

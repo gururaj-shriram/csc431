@@ -1,7 +1,7 @@
 /*
   name: download-test.js 
   modified last by: guru
-  date last modified: 6 may 2018
+  date last modified: 7 may 2018
 
   end to end download integration test
   also a proof-of-work of the datapackager since a zip file results
@@ -24,8 +24,8 @@ const options = {
     method: 'post',
     body: { 
       construccion: '1', 
-      workshop_20170210: '2', 
-      terreno: '3', 
+      workshop_20170210: '3', 
+      terreno: '27', 
       formattype: 'kml' 
     },
     json: true,
@@ -56,7 +56,8 @@ describe('end to end download test', function () {
     });
   });
   
-  it('should take in 3 simultaneous requests', (done) => {
+  it('should take in 3 simultaneous requests', function(done) {
+    this.timeout(4000);
     let urls = [];
 
     for (let i = 0; i < 3; i++) {
@@ -70,7 +71,7 @@ describe('end to end download test', function () {
   });
 
   it('should take in 10 simultaneous requests', function(done) {
-    this.timeout(5000);
+    this.timeout(9000);
     let urls = [];
 
     for (let i = 0; i < 10; i++) {
@@ -84,7 +85,7 @@ describe('end to end download test', function () {
   });
 
   it('should take in 100 simultaneous requests', function(done) {
-    this.timeout(40000);
+    this.timeout(65000);
     let urls = [];
 
     for (let i = 0; i < 100; i++) {
