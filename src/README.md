@@ -34,6 +34,11 @@ http://localhost:PORT
 
 To edit the server, edit `app.js`.
 
+Finally, to set-up the database, see the search team's helpful 
+[entry](https://github.com/the-mikedavis/clue/wiki/Creating-the-Database) 
+on getting started. We would like to offer special thanks for the research
+involved in writing this.
+
 ## Multimedia Data 
 
 As part of our requirements, our server must retrieve any multimedia data 
