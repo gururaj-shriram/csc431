@@ -1,8 +1,8 @@
 %
 % latex template for SRS documentation 
 % name: srs.tex 
-% date last modified: 5 may 2018
-% modified by: jerry 
+% date last modified: 6 may 2018
+% modified by: guru
 % 
 %
 \documentclass{article}
@@ -402,20 +402,26 @@ As we are using Amazon EC2 for deployment, our hardware constraints are set by t
 	\caption{NFR1 Scenario}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
-		\textbf{Statement of Purpose} & The user would like to be able to download multiple pieces of information together instead of individually.         \\ \hline
+		\textbf{Statement of Purpose} & The system should be able to handle at least three
+        simultaneous download requests. \\ \hline
 		\textbf{Individual} & A public (unauthorized), registered (authorized), or administrator user. \\ \hline
-		\textbf{Trigger}  & The user selects multiple pieces of information and presses the download button.            \\ \hline
-		\textbf{Precondition(s)}  & A user search has been completed, filtered for 
-			workshop, multimedia, and cadastral data, and may have been subsetted. The user has selected multiple pieces of information to download. \\ \hline
-		\textbf{Postcondition(s)}  & The multiple pieces of information selected for downloading are compressed and downloaded to the user's local machine. \\ \hline
-		\textbf{Assumptions} & One download request is made for each 
-			checkbox selected. Initially, up to 3 checkboxes may be selected at one time. If possible, in a future iteration of the system, more than 3 checkboxes may be selected at one time. \\ \hline
+		\textbf{Trigger}  & Three or more users select pieces of information to download and press 
+        the download button simultaneously. \\ \hline
+		\textbf{Precondition(s)}  & The users' search has been completed, filtered for workshop, multimedia, and cadastral data, and may have been subsetted. The users have selected pieces of information to 
+        download. \\ \hline
+		\textbf{Postcondition(s)}  & The pieces of information selected for downloading are compressed and 
+        downloaded to the users' local machines.  \\ \hline
+		\textbf{Assumptions} & Each user makes one download request after selecting the necessary pieces of 
+        information and pressing the download button on the front end. The minimum requirement is to handle 
+        up to three simultaneous download requests. The current iteration of the system can support up to 
+        100 simultaneous download requests. \\ \hline
 		\textbf{Steps of Scenario} & 
 		\begin{enumerate}
-				\item User A observes a list of results from a completed search.
-				\item User A selects multiple checkboxes to download.
-				\item User A presses the download button.
-				\item The multiple pieces of information relevant to the selected checkboxes are compressed and downloaded locally to User A's machine.
+				\item Users A, B, and C observe a list of results from a completed search.
+				\item Users A, B, and C select pieces of information to download by clicking on checkboxes.
+				\item Users A, B, and C press the download button simultaneously.
+				\item The multiple pieces of information relevant to the selected checkboxes are individually 
+                compressed and downloaded locally to the machines of Users A, B, and C.
 			\end{enumerate}  \\  \hline
 	\end{tabularx}
 \end{table}
